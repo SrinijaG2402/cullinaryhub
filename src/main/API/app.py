@@ -4,7 +4,8 @@ from flask_cors import CORS
 import oracledb
 import datetime
 import dateutil.relativedelta
-import math
+import math    
+import random
 
 # Credits: https://github.com/JustTheCoolest/StockAnalyser
 
@@ -77,6 +78,12 @@ class Unique(Resource):
         return recipes
 
 
+def generate_recipe_id():
+    # Generate a random integer between 1 and 1000000 (you can adjust these numbers as needed)
+    recipe_id = random.randint(1, 1000000)
+    return recipe_id
+
+
 class Parent(Resource):
     parser = reqparse.RequestParser()  
     parser.add_argument('username', required=True) 
@@ -105,12 +112,15 @@ class Parent(Resource):
 
     def post(self):
 
-        args = parser.parse_args()  # parse arguments to dictionary
+        args = Parent.parser.parse_args()  # parse arguments to dictionary
 
-        # use args['recipe_name'] and args['ingredients'] to process the posted data
-        # for example, you might store it in a database or use it to update the state of your application
-
-        return {'message': 'Recipe received', 'data': args}, 200
+        recipe_id = generate_recipe_id()
+        # Insert the recipe into the database
+        try:
+            cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
+            return {'message': 'Recipe received', 'data': args}, 200
+        except:
+            return {'error': 'An error occurred'}, 500
 
 class Fork(Resource):
     parser = reqparse.RequestParser()

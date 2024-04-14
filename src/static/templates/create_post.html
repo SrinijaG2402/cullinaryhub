@@ -51,7 +51,7 @@
         <h1><i class="fas fa-utensils"></i> Create a New Recipe</h1>
     </header>
     <main>
-        <form id="recipeForm" action="submit_recipe.php" method="post" enctype="multipart/form-data">
+        <form id="recipeForm" onsubmit="post_data()">
             <!-- Heading: Create a New Recipe -->
             <div class="form-group">
                 <h2>Create a New Recipe</h2>
@@ -163,6 +163,37 @@
                 ingredientsContainer.appendChild(newIngredientDiv);
             });
         });
+    </script>
+    <script>
+        // Function to post data to the server
+        function post_data() {
+            // Get the form element
+            var form = document.getElementById('recipeForm');
+
+            // Create a new FormData object
+            var formData = new FormData(form);
+
+            // Get the ingredients
+            var ingredients = document.querySelectorAll('.ingredient');
+            var ingredientsArray = [];
+            ingredients.forEach(function(ingredient) {
+                var name = ingredient.querySelector('.ingredient-name').value;
+                var quantity = ingredient.querySelector('.ingredient-quantity').value;
+                ingredientsArray.push({name: name, quantity: quantity});
+            });
+
+            // Add the ingredients to the form data
+            formData.append('ingredients', JSON.stringify(ingredientsArray));
+
+            // Send the data to the server
+            fetch("/", {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+        }
     </script>
 </body>
 </html>
