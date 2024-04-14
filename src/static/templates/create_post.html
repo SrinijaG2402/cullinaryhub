@@ -32,10 +32,15 @@
         <h1><i class="fas fa-utensils"></i> Create a New Recipe</h1>
     </header>
     <main>
-        <form id="recipeForm" onsubmit="post_data()">
+        <form id="recipeForm" action="submit_recipe.php" method="post" enctype="multipart/form-data">
+            <!-- Heading: Create a New Recipe -->
+            <div class="form-group">
+                <h2>Create a New Recipe</h2>
+            </div>
+
             <!-- User name input -->
             <div class="form-group">
-                <label for="userName">Your Name:</label>
+                <label for="userName">Username:</label>
                 <input type="text" id="userName" name="userName" placeholder="Enter your name" required>
             </div>
 
@@ -61,11 +66,16 @@
                 <label for="sour">Sour</label>
             </div>
 
-            <!-- Recipe 1 -->
+            <!-- Heading: New Recipe -->
+            <div class="form-group">
+                <h2>New Recipe</h2>
+            </div>
+
+            <!-- Recipe Name input -->
             <div class="form-group">
                 <label for="newRecipe1">
                     <!-- Icon for new recipe -->
-                    <i class="fas fa-plus-circle"></i> New Recipe:
+                    <i class="fas fa-plus-circle"></i> Recipe Name:
                 </label>
                 <input type="text" id="newRecipe1" name="newRecipe1" placeholder="Enter the name of your recipe" required>
             </div>
@@ -84,6 +94,19 @@
                     </div>
                 </div>
                 <button type="button" class="addIngredientBtn"><i class="fas fa-plus"></i> Add Ingredient</button>
+            </div>
+
+            <!-- Heading: Recipe Instructions -->
+            <div class="form-group">
+                <h2>Recipe Instructions</h2>
+            </div>
+
+            <!-- Recipe Instructions text area -->
+            <div class="form-group">
+                <label for="recipeInstructions">
+                    <i class="fas fa-book"></i> Recipe Instructions:
+                </label>
+                <textarea id="recipeInstructions" name="recipeInstructions" placeholder="Enter the recipe instructions here" rows="4" required></textarea>
             </div>
 
             <!-- Submit button -->
@@ -122,37 +145,5 @@
             });
         });
     </script>
-    <script>
-        // Function to post data to the server
-        function post_data() {
-            // Get the form element
-            var form = document.getElementById('recipeForm');
-            
-            // Create a new FormData object
-            var formData = new FormData(form);
-            
-            // Get the ingredients
-            var ingredients = document.querySelectorAll('.ingredient');
-            var ingredientsArray = [];
-            ingredients.forEach(function(ingredient) {
-                var name = ingredient.querySelector('.ingredient-name').value;
-                var quantity = ingredient.querySelector('.ingredient-quantity').value;
-                ingredientsArray.push({name: name, quantity: quantity});
-            });
-            
-            // Add the ingredients to the form data
-            formData.append('ingredients', JSON.stringify(ingredientsArray));
-            
-            // Send the data to the server
-            fetch("/", {
-                method: "POST",
-                body: JSON.stringify(formData),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-        }
-    </script>
 </body>
-
 </html>
