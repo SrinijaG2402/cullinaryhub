@@ -16,11 +16,35 @@ cursor = connection.cursor()
 def table_setup():
     # Task: Check if the existing table signature is the same as the table we are trying to create
     try:
-        cursor.execute(
-            '''
-            CREATE TABLE Stocks(
-            )
-            ''')
+        cursor.execute("""
+        CREATE TABLE recipe(
+            recipeid INT PRIMARY KEY,
+            username VARCHAR(25),
+            parent INT,
+            location VARCHAR(255),
+            vegetarianism varchar(15),
+            taste VARCHAR(15),
+            description TEXT
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE ingredients_lists(
+            ingredient_id INT,
+            quantity INT,
+            recipe_id INT,
+            PRIMARY KEY (ingredient_id, recipe_id),
+            FOREIGN KEY (ingredient_id) REFERENCES ingredient(ingredient_id),
+            FOREIGN KEY (recipe_id) REFERENCES recipe(recipeid)
+        )
+        """)
+
+        cursor.execute("""
+        CREATE TABLE ingredient(
+            ingredient_id INT PRIMARY KEY,
+            name VARCHAR(255)
+        )
+        """)
     except oracledb.DatabaseError as e:
         error, = e.args
         if error.code == 955:
