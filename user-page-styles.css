@@ -8,23 +8,18 @@
 
   body {
     font-family: Arial, sans-serif;
+    background-color: #1f242d;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
   }
-  body {
-    background-image: url(images/user-page-bg.png);
-    
-    background-size: cover;
-    height: 100vh;
-}
-  
+ 
   .container {
     max-width: 400px;
     width: 100%;
     padding: 40px;
-    background-color: #ffffff00;
+    background-color: #323946;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
