@@ -209,8 +209,8 @@ class Get(Resource):
         return {'recipe': recipe}, 200
     
 
-api.add_resource(Unique, '/', '//view_variation/<unique>')
-api.add_resource(Parent, '/', '/view_variation/<recipeid>')
+api.add_resource(Unique, '/posts')
+api.add_resource(Parent, '/view_variation/<recipeid>')
 api.add_resource(Fork, '/fork')
 api.add_resource(Edit, '/edit')
 api.add_resource(Pull, '/pull')
