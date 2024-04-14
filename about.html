@@ -1,65 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Recipe Repository</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            background-image: url('https://images.unsplash.com/photo-1543340904-1ccec6549722?auto=format&fit=crop&w=1350&q=80'); /* Background image */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow-y: auto; /* Add scrollbar when content exceeds container height */
-            max-height: 70vh; /* Limit container height to 70% of viewport height */
-        }
-        h1 {
-            text-align: center;
-            color: #ff6f61; /* Vibrant red */
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        p {
-            line-height: 1.6;
-            color: #666;
-        }
-        ul {
-            padding-left: 20px;
-            margin-bottom: 20px;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        strong {
-            color: #ff6f61; /* Vibrant red */
-        }
-        /* Scrollbar style */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ff6f61; /* Vibrant red */
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #d14033; /* Darker red on hover */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Recipe Repository</title>
+  <style>
+    :root {
+      --bg-color: #1f242d;
+      --second-bg-color: #323946;
+      --text-color: #fff;
+      --main-color: #0ef; /* Define your main color here */
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      background-image: url('https://images.unsplash.com/photo-1543340904-1ccec6549722?auto=format&fit=crop&w=1350&q=80'); /* Background image */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: var(--second-bg-color);
+      border-radius: 5px;
+      border: 2px solid var(--second-bg-color); /* Set initial border color */
+      overflow-y: auto; /* Add scrollbar when content exceeds container height */
+      max-height: 70vh; /* Limit container height to 70% of viewport height */
+      transition: border-color 0.3s ease-in-out; /* Animation properties */
+    }
+
+    .container:hover {
+      /* border-color: var(--main-color); Change border color on hover */
+      box-shadow: 0 0 1rem var(--main-color);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff6e61b4; /* Vibrant red */
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: rgba(0, 238, 255, 0.634);
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    strong {
+      color: #ff6e61b4; /* Vibrant red */
+    }
+
+    /* Scrollbar style */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #ff6e61b4; /* Vibrant red */
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff6e61b4; /* Darker red on hover */
+    }
+  </style>
 </head>
 <body>
     <div class="container">
