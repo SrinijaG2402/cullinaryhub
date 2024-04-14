@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Post</title>
+    <style>
+        /* CSS code to increase font size */
+        body {
+            font-size: 28px; /* Change the font size as needed */
+            background-color: rgb(31, 36, 45); /* Background color */
+            color: white; /* Text color */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Header content, such as navigation links or a logo -->
+    </header>
+
+    <main>
+        <div class="post-container">
+            <!-- Container for posts -->
+        </div>
+    </main>
+    <script>
+        fetch('http://192.168.176.150:5000/posts')
+        .then(response => response.json())
+        .then(data => {
+            container = document.getElementById('post-container')
+            data.forEach(post => {
+                postDiv = document.createElement('div')
+                postDiv.className = 'post'
+                postDiv.innerHTML = `
+                    <h2>${post[0]}</h2> <!-- recipeid used as title -->
+                    <p> Username: <span class="username">${post[1]}</span></p>
+                    <p> Parent: <span class="parent">${post[2]}</span></p>
+                    <p> Location: <span class="location">${post[3]}</span></p>
+                    <p> Vegetarianism: <span class="vegetarianism">${post[4]}</span></p>
+                    <p> Taste: <span class="taste">${post[5]}</span></p>
+                    <p> Description: ${post[6]}</p>
+                `
+                container.appendChild(postDiv)
+            })
+        })
+    </script>
+
+</body>
+</html>
