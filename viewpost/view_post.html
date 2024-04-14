@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Post</title>
-    <!-- Add any necessary CSS or stylesheets -->
+    <style>
+        /* CSS code to increase font size */
+        body {
+            font-size: 28px; /* Change the font size as needed */
+            background-color: rgb(31, 36, 45); /* Background color */
+            color: white; /* Text color */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -13,25 +20,64 @@
 
     <main>
         <div class="post-container">
-            <!-- First Post -->
-            <div class="post">
-                <h2>Title of the First Post</h2>
-                <p>Author: Author Name</p>
-                <p>Date: Date of the Post</p>
-                <img src="path/to/post/image1.jpg" alt="Post Image">
-                <p>Post Content...</p>
+            <!-- First Recipe -->
+            <div class="recipe">
+                <h2>Title of the First Recipe</h2>
+                <p>Type: <span class="food-type">Veg</span></p>
+                <p>Taste: <span class="taste">Spicy</span></p>
+                <p>Ingredients:</p>
+                <ul class="ingredients">
+                    <li>Ingredient 1 <span class="quantity">- 100g</span></li>
+                    <li>Ingredient 2 <span class="quantity">- 2 cups</span></li>
+                    <!-- Add more ingredients as needed -->
+                </ul>
+                <p>Instructions:</p>
+                <ul class="instructions">
+                    <li>Step 1: Instruction 1</li>
+                    <li>Step 2: Instruction 2</li>
+                    <!-- Add more instructions as needed -->
+                </ul>
             </div>
 
-            <!-- Second Post -->
-            <div class="post">
-                <h2>Title of the Second Post</h2>
-                <p>Author: Author Name</p>
-                <p>Date: Date of the Post</p>
-                <img src="path/to/post/image2.jpg" alt="Post Image">
-                <p>Post Content...</p>
+            <!-- Second Recipe -->
+            <div class="recipe">
+                <h2>Title of the Second Recipe</h2>
+                <p>Type: <span class="food-type">Non-veg</span></p>
+                <p>Taste: <span class="taste">Sweet</span></p>
+                <p>Ingredients:</p>
+                <ul class="ingredients">
+                    <li>Ingredient A <span class="quantity">- 200g</span></li>
+                    <li>Ingredient B <span class="quantity">- 1 tbsp</span></li>
+                    <!-- Add more ingredients as needed -->
+                </ul>
+                <p>Instructions:</p>
+                <ul class="instructions">
+                    <li>Step 1: Instruction A</li>
+                    <li>Step 2: Instruction B</li>
+                    <!-- Add more instructions as needed -->
+                </ul>
             </div>
 
-            <!-- Add more posts as needed -->
+            <!-- Third Recipe -->
+            <div class="recipe">
+                <h2>Title of the Third Recipe</h2>
+                <p>Type: <span class="food-type">Vegan</span></p>
+                <p>Taste: <span class="taste">Sour</span></p>
+                <p>Ingredients:</p>
+                <ul class="ingredients">
+                    <li>Ingredient X <span class="quantity">- 300g</span></li>
+                    <li>Ingredient Y <span class="quantity">- 3 cups</span></li>
+                    <!-- Add more ingredients as needed -->
+                </ul>
+                <p>Instructions:</p>
+                <ul class="instructions">
+                    <li>Step 1: Instruction X</li>
+                    <li>Step 2: Instruction Y</li>
+                    <!-- Add more instructions as needed -->
+                </ul>
+            </div>
+            
+            <!-- Add more recipes as needed -->
         </div>
     </main>
 
