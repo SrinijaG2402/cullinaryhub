@@ -1,0 +1,17 @@
+/* Add any additional CSS styles here */
+body {
+    background-color: rgb(31, 36, 45);
+    color: white;
+    font-size: 28px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.ingredient {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.ingredient input {
+    margin-right: 10px;
+}
