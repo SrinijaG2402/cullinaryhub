@@ -9,19 +9,24 @@ The main goal is to create a recipe network that shows how recipes are connected
 • Uploaded recipes from users can be forked just like github.
 • This website has the potential to provide world-wide cultural appreciation and unite everyone with the diverse delicacies around the world (fulfils SDG 11).
 restrauntview.html-It's listing the restraunts 
+
 h1.html-list of dishes in restraunt 1 
+
 h2.html-list of dishes in restraunt 2
+
 h3.html-list of dishes in restraunt 3
+
 createpost.html-posts the recipies and usernames
+
 about.html- shows the features of the website
+
 view_post.html-views the posts already made 
+
 mainpageindex.html-homepage of the websites,links all the webpages
+
 profile-page.html-shows profile of the user 
 
 
-
-
-gfghh
 
 
 
