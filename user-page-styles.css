@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 /* Reset some default styles */
 * {
@@ -6,9 +7,16 @@
     box-sizing: border-box;
   }
 
+  :root {
+    --bg-color: #1f242d;
+    --second-bg-color: #323946;
+    --text-color: #fff;
+    --main-color: #0ef;
+}
+
   body {
-    font-family: Arial, sans-serif;
-    background-color: #1f242d;
+    font-family:'Poppins', sans-serif;
+    background-color: var(--bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,6 +30,17 @@
     background-color: #323946;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+  
+    
+  }
+
+
+  .container:hover{
+    
+    box-shadow: 0 0 1rem var(--main-color);
+    animation : ease-in 
+
   }
   
   .user-card {
