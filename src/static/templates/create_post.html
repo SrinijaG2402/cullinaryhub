@@ -6,15 +6,34 @@
     <title>Create a Recipe</title>
     <!-- Link to Font Awesome stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="create_post.css">
     <style>
         /* Add any additional CSS styles here */
         body {
             background-color: rgb(31, 36, 45);
             color: white;
             font-size: 28px;
+            line-height: 1.6; /* Increase line spacing */
         }
-        .form-group {
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form {
+            width: 50%;
+        }
+        .form-section {
             margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid white; /* Add box border */
+            padding: 20px; /* Add padding */
+            border-radius: 10px; /* Add border radius */
+        }
+        .form-section h2 {
+            margin-top: 0;
+            margin-bottom: 20px; /* Add margin bottom */
         }
         .ingredient {
             display: flex;
