@@ -9,7 +9,7 @@ import math
 
 app = Flask(__name__)
 api = Api(app)
-parent_and_siblings = []
+
 connection = oracledb.connect(user='system', password=open('password.txt').read(), dsn='localhost:1521/xe')
 cursor = connection.cursor()
 
@@ -29,45 +29,10 @@ def table_setup():
         else:
             raise
 
-class Analyser(Resource):
-
-    parser = reqparse.RequestParser()
-    parser.add_argument('price_at_buy', type=float, required=True)
-    parser.add_argument('purchase_date', type=lambda string: datetime.datetime.strptime(string, '%Y-%m-%d').date(), required=True)
-    parser.add_argument('fee_ratio_at_buy', type=float, required=True)
-    parser.add_argument('fee_ratio_at_sell', type=float, required=True)
-    parser.add_argument('capital_gains_tax_ratio', type=float, required=True)
-    parser.add_argument('target_profit_ratio', type=float, required=True)
-    
-    def get(self, stock_name = None):
-        if stock_name == None:
-            cursor.execute('SELECT name FROM Stocks')
-            return {'Available Stocks': cursor.fetchall()}
-        cursor.execute(f"SELECT * FROM Stocks WHERE name = '{stock_name}'")
-        stock_data = cursor.fetchall()
-        if not stock_data:
-            return {'message': 'Stock not found'}, 404
-        # price_to_sell_with_strict_target, price_to_sell_with_year_target = 
-        return [Analyser.target_sale_prices(*stock_data_row[1:]) for stock_data_row in stock_data]
-
-
-    def post(self, stock_name):
-        arguments = Analyser.parser.parse_args()
-        cursor.execute(f"""
-            INSERT INTO Stocks VALUES (
-                '{stock_name}', 
-                {arguments['price_at_buy']}, 
-                TO_DATE('{arguments['purchase_date']}', 'yyyy-mm-dd'), 
-                {arguments['fee_ratio_at_buy']}, 
-                {arguments['fee_ratio_at_sell']}, 
-                {arguments['capital_gains_tax_ratio']}, 
-                {arguments['target_profit_ratio']}
-            )
-        """)
-        connection.commit()
-        return {'message': 'Stock added'}, 201
-
 class Recipe(Resource):
+    parser = reqparse.RequestParser()  
+    parser.add_argument('recipe_name', required=True)  #
+    parser.add_argument('ingredients', required=True)
 
 
     def unique():
@@ -84,7 +49,7 @@ class Recipe(Resource):
         return recipes
     
     def find_parents_and_siblings(recipe_id):
-
+        parent_and_siblings = []
 
         def recursive_query(recipe_id):
             cursor.execute(f"SELECT recipeid FROM recipe WHERE parent = {recipe_id}")
@@ -101,21 +66,14 @@ class Recipe(Resource):
 
 
 
-    def post(self, stock_name):
-        arguments = Analyser.parser.parse_args()
-        cursor.execute(f"""
-            INSERT INTO Stocks VALUES (
-                '{stock_name}', 
-                {arguments['price_at_buy']}, 
-                TO_DATE('{arguments['purchase_date']}', 'yyyy-mm-dd'), 
-                {arguments['fee_ratio_at_buy']}, 
-                {arguments['fee_ratio_at_sell']}, 
-                {arguments['capital_gains_tax_ratio']}, 
-                {arguments['target_profit_ratio']}
-            )
-        """)
-        connection.commit()
-        return {'message': 'Stock added'}, 201
+    def post(self):
+
+        args = parser.parse_args()  # parse arguments to dictionary
+
+        # use args['recipe_name'] and args['ingredients'] to process the posted data
+        # for example, you might store it in a database or use it to update the state of your application
+
+        return {'message': 'Recipe received', 'data': args}, 200
 
 
 
