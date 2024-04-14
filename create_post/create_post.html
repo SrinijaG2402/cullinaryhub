@@ -6,42 +6,75 @@
     <title>Create a Recipe</title>
     <!-- Link to Font Awesome stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="create_post.css">
     <style>
-        /* Add any additional CSS styles here */
+        /* Root variables */
+        :root {
+            --bg-color: #1f242d;
+            --second-bg-color: #323946;
+            --text-color: #fff;
+            --main-color: #0ef;
+        }
+
         body {
-            background-color: rgb(31, 36, 45);
-            color: white;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-size: 28px;
             line-height: 1.6; /* Increase line spacing */
         }
+
         .form-container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
+
         .form {
             width: 50%;
         }
+
         .form-section {
             margin-bottom: 20px;
             text-align: center;
-            border: 2px solid white; /* Add box border */
+            border: 2px solid var(--text-color); /* Add box border */
             padding: 20px; /* Add padding */
             border-radius: 10px; /* Add border radius */
+            background-color: var(--second-bg-color); /* Add background color */
+            transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
         }
+
+        .form-section:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow effect on hover */
+        }
+
         .form-section h2 {
             margin-top: 0;
             margin-bottom: 20px; /* Add margin bottom */
         }
+
         .ingredient {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
+
         .ingredient input {
             margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: var(--main-color); /* Change button background color */
+            color: var(--text-color); /* Change button text color */
+            border: none;
+            padding: 10px 20px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: darken(var(--main-color), 10%); /* Darken button background color on hover */
         }
     </style>
 </head>

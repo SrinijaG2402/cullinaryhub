@@ -61,3 +61,8 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: darken(var(--main-color), 10%); /* Darken button background color on hover */
 }
+.form-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px; /* Add margin bottom */
+    color: skyblue; /* Set heading color to sky blue */
+}
