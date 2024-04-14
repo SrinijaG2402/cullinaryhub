@@ -203,9 +203,23 @@ api.add_resource(Get, '/get/<int:recipeid>')
 def index():
     return render_template('mainpageindex.html')
 
-@app.route('/')
+@app.route('/user-page-body.html')
+def user():
+    return render_template('user-page-body.html')
+
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
+
+@app.route('/view_post.html')
 def viewpost():
-    return render_template(r'viewpost\view_post.html')
+    return render_template('view_post.html')
+
+
+@app.route('/create_post.html')  
+def create_post():
+    return render_template('create_post.html')
+
 
 if __name__ == "__main__":
     table_setup()
