@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS
 import oracledb
 import datetime
 import dateutil.relativedelta
@@ -8,6 +9,7 @@ import math
 # Credits: https://github.com/JustTheCoolest/StockAnalyser
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 connection = oracledb.connect(user='system', password=open('API/password.txt').read(), dsn='localhost:1521/xe')
