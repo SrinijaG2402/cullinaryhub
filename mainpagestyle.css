@@ -46,6 +46,7 @@ section {
     border-bottom: .1rem solid rgba(0, 0, 0, .2);
 }
 
+
 .logo{
     font-size: 2.5rem;
     color: var(--text-color);
@@ -521,4 +522,37 @@ span {
 }
 .logo:hover {
     color: var(--main-color); 
+}
+
+.user-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 90%;
+    transform: translateX(-50%);
+    background-color: var(--bg-color);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.user-options a {
+    margin-left: 0px;
+}
+
+.user-options a {
+    display: block;
+    color: var(--text-color);
+    font-size: 1.6rem;
+    padding: 0.5rem 0;
+    transition: color 0.3s;
+}
+
+.user-options a:hover {
+    color: var(--main-color);
+}
+
+.header:hover .user-options {
+    display: block;
 }
