@@ -10,7 +10,7 @@ import math
 app = Flask(__name__)
 api = Api(app)
 
-connection = oracledb.connect(user='system', password=open('password.txt').read(), dsn='localhost:1521/xe')
+connection = oracledb.connect(user='system', password=open('API/password.txt').read(), dsn='localhost:1521/xe')
 cursor = connection.cursor()
 
 def table_setup():
@@ -18,21 +18,21 @@ def table_setup():
     try:
         cursor.execute("""
         CREATE TABLE recipe(
-            recipeid INT PRIMARY KEY,
-            username VARCHAR(25),
-            parent INT,
-            location VARCHAR(255),
-            vegetarianism varchar(15),
-            taste VARCHAR(15),
-            description TEXT
+            recipeid NUMBER PRIMARY KEY,
+            username VARCHAR2(25),
+            parent NUMBER,
+            location VARCHAR2(255),
+            vegetarianism VARCHAR2(15),
+            taste VARCHAR2(15),
+            description VARCHAR2(255)
         )
         """)
 
         cursor.execute("""
         CREATE TABLE ingredients_lists(
-            ingredient_id INT,
-            quantity INT,
-            recipe_id INT,
+            ingredient_id NUMBER,
+            quantity NUMBER,
+            recipe_id NUMBER,
             PRIMARY KEY (ingredient_id, recipe_id),
             FOREIGN KEY (ingredient_id) REFERENCES ingredient(ingredient_id),
             FOREIGN KEY (recipe_id) REFERENCES recipe(recipeid)
@@ -41,8 +41,8 @@ def table_setup():
 
         cursor.execute("""
         CREATE TABLE ingredient(
-            ingredient_id INT PRIMARY KEY,
-            name VARCHAR(255)
+            ingredient_id NUMBER PRIMARY KEY,
+            name VARCHAR2(255)
         )
         """)
     except oracledb.DatabaseError as e:
