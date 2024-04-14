@@ -4,7 +4,9 @@
     --second-bg-color: #323946;
     --text-color: #fff;
     --main-color: #0ef;
-}/* Global styles */
+}
+
+/* Global styles */
 body {
     background: var(--bg-color);
     color: var(--text-color);
@@ -19,12 +21,13 @@ body {
     padding: 2rem 2rem 6rem; /* Added more padding to the bottom */
     position: relative;
 }
-/* 
+
+
 .profile-icon {
     position: absolute;
-    top: 2rem; /* Adjusted position */
-    right: 2rem; /* Adjusted position */
-} */
+    top: 2rem; /* Adjusted position 
+    right: 2rem; /* Adjusted position 
+}
 
 .profile-icon img {
     width: 40px; /* Adjusted size */
