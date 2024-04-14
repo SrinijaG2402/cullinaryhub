@@ -53,13 +53,17 @@ def table_setup():
         else:
             raise
 
-class Recipe(Resource):
+class Unique(Resource):
     parser = reqparse.RequestParser()  
-    parser.add_argument('recipe_name', required=True)  #
-    parser.add_argument('ingredients', required=True)
+    parser.add_argument('username', required=True) 
+    parser.add_argument('parent', required=True)
+    parser.add_argument('location', required=True)
+    parser.add_argument('vegetarianism', required=True)
+    parser.add_argument('taste', required=True)
+    parser.add_argument('description', required=True)
 
 
-    def unique():
+    def get():
         
         # Query to retrieve details of recipes without a parent
         query = "SELECT * FROM recipe WHERE parent IS NULL"
@@ -88,7 +92,31 @@ class Recipe(Resource):
         
         return parent_and_siblings
 
+class Parent(Resource):
+    parser = reqparse.RequestParser()  
+    parser.add_argument('username', required=True) 
+    parser.add_argument('parent', required=True)
+    parser.add_argument('location', required=True)
+    parser.add_argument('vegetarianism', required=True)
+    parser.add_argument('taste', required=True)
+    parser.add_argument('description', required=True)
 
+    
+    def get(recipe_id):
+        parent_and_siblings = []
+
+        def recursive_query(recipe_id):
+            cursor.execute(f"SELECT recipeid FROM recipe WHERE parent = {recipe_id}")
+            results = cursor.fetchall()
+            for row in results:
+                parent_and_siblings.append(row[0])
+                recursive_query(row[0])
+        
+        # Call the recursive function to find parents and siblings
+        recursive_query(recipe_id)
+        
+        
+        return parent_and_siblings
 
     def post(self):
 
@@ -99,9 +127,92 @@ class Recipe(Resource):
 
         return {'message': 'Recipe received', 'data': args}, 200
 
+class Fork(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('recipeid', type=int, required=True, help='Recipe ID is required')
+    parser.add_argument('username', type=str, required=True, help='Username is required')
+    
+    def post(self):
+        args = self.parser.parse_args()
+        
+        # Check if the provided recipe ID exists
+        cursor.execute("SELECT * FROM recipe WHERE recipeid = ?", (args['recipeid'],))
+        existing_recipe = cursor.fetchone()
+        if not existing_recipe:
+            return {'error': 'Recipe does not exist'}, 404
+        
+        # Insert a new record into the recipe table with the provided username as the owner
+        cursor.execute("""
+            INSERT INTO recipe (recipeid, username, parent, location, vegetarianism, taste, description) 
+            SELECT recipeid_seq.NEXTVAL, :username, parent, location, vegetarianism, taste, description
+            FROM recipe
+            WHERE recipeid = :recipeid
+        """, {'username': args['username'], 'recipeid': args['recipeid']})
+        
+        # Commit the transaction
+        connection.commit()
+        
+        return {'message': 'Recipe forked successfully'}, 201
+
+class Edit(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('recipeid', type=int, required=True, help='Recipe ID is required')
+    parser.add_argument('username', type=str, required=True, help='Username is required')
+    parser.add_argument('location', type=str, required=True, help='Location is required')
+    parser.add_argument('vegetarianism', type=str, required=True, help='Vegetarianism is required')
+    parser.add_argument('taste', type=str, required=True, help='Taste is required')
+    parser.add_argument('description', type=str, required=True, help='Description is required')
+
+    def put(self):
+        args = self.parser.parse_args()
+
+        # Check if the provided recipe ID exists
+        cursor.execute("SELECT * FROM recipe WHERE recipeid = ?", (args['recipeid'],))
+        existing_recipe = cursor.fetchone()
+        if not existing_recipe:
+            return {'error': 'Recipe does not exist'}, 404
+
+        # Update the recipe details
+        cursor.execute("""
+            UPDATE recipe
+            SET username = :username, location = :location, vegetarianism = :vegetarianism,
+                taste = :taste, description = :description
+            WHERE recipeid = :recipeid
+        """, args)
+        
+        # Commit the transaction
+        connection.commit()
+
+        return {'message': 'Recipe updated successfully'}, 200
 
 
-api.add_resource(Analyser, '/', '/<string:stock_name>')
+class Pull(Resource):
+    def get(self):
+        # Query to retrieve all recipes
+        cursor.execute("SELECT * FROM recipe")
+        recipes = cursor.fetchall()
+        
+        return {'recipes': recipes}, 200
+
+
+class Get(Resource):
+    def get(self, recipeid):
+        # Query to retrieve the details of a specific recipe
+        cursor.execute("SELECT * FROM recipe WHERE recipeid = ?", (recipeid,))
+        recipe = cursor.fetchone()
+        
+        if not recipe:
+            return {'error': 'Recipe not found'}, 404
+        
+        return {'recipe': recipe}, 200
+    
+
+api.add_resource(Unique, '/', '//view_variation/<unique>')
+api.add_resource(Parent, '/', '/view_variation/<recipeid>')
+api.add_resource(Fork, '/fork')
+api.add_resource(Edit, '/edit')
+api.add_resource(Pull, '/pull')
+api.add_resource(Get, '/get/<int:recipeid>')
 
 
 if __name__ == "__main__":
