@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Recipe</title>
+    <!-- Link to Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-color: rgb(6, 54, 105); color: white;">
+    <header>
+        <!-- Icon for header -->
+        <h1><i class="fas fa-utensils"></i> Create a New Recipe</h1>
+    </header>
+    <main>
+        <form id="recipeForm" action="submit_recipe.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="newRecipe">
+                    <!-- Icon for new recipe -->
+                    <i class="fas fa-plus-circle"></i> New Recipe:
+                </label>
+                <input type="text" id="newRecipe" name="newRecipe" placeholder="Enter the name of your recipe" required>
+            </div>
+
+            <!-- Radio buttons for attributes -->
+            <div class="form-group">
+                <label>Attributes:</label><br>
+                <input type="radio" id="vegan" name="attribute" value="vegan">
+                <label for="vegan">Vegan</label>
+                <input type="radio" id="vegetarian" name="attribute" value="vegetarian">
+                <label for="vegetarian">Vegetarian</label>
+                <input type="radio" id="nonVeg" name="attribute" value="nonVeg">
+                <label for="nonVeg">Non-veg</label>
+            </div>
+
+            <!-- Radio buttons for taste -->
+            <div class="form-group">
+                <label>Taste:</label><br>
+                <input type="radio" id="spicy" name="taste" value="spicy">
+                <label for="spicy">Spicy</label>
+                <input type="radio" id="sweet" name="taste" value="sweet">
+                <label for="sweet">Sweet</label>
+                <input type="radio" id="sour" name="taste" value="sour">
+                <label for="sour">Sour</label>
+            </div>
+
+            <!-- Ingredients section -->
+            <div class="form-group">
+                <label for="ingredients">
+                    <!-- Icon for ingredients -->
+                    <i class="fas fa-shopping-basket"></i> Ingredients:
+                </label>
+                <div id="ingredients">
+                    <!-- Existing ingredient input fields -->
+                    <div class="ingredient">
+                        <input type="text" class="ingredient-name" placeholder="Ingredient Name">
+                        <input type="text" class="ingredient-quantity" placeholder="Quantity">
+                    </div>
+                </div>
+                <button type="button" id="addIngredientBtn"><i class="fas fa-plus"></i> Add Ingredient</button>
+            </div>
+
+            <!-- Recipe textarea -->
+            <div class="form-group recipe-group">
+                <label for="recipe">
+                    <!-- Icon for recipe -->
+                    <i class="fas fa-pencil-alt"></i> Recipe:
+                </label>
+                <div class="sub-box">
+                    <div class="sub-box-title">Procedure:</div>
+                    <textarea id="recipeProcedure" name="recipeProcedure" rows="6" placeholder="Enter procedure"></textarea>
+                </div>
+                
+            </div>
+
+            <!-- Image upload -->
+            <!-- <div class="form-group">
+                <label for="image"> -->
+                    <!-- Icon for image upload -->
+                    <!-- <i class="fas fa-upload"></i> Upload Image
+                </label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div> -->
+
+            <!-- Button with icon -->
+            <button type="submit"><i class="fas fa-check"></i> Submit Recipe</button>
+        </form>
+    </main>
+    <script>
+        document.getElementById('addIngredientBtn').addEventListener('click', function() {
+            // Create a new ingredient div
+            var newIngredientDiv = document.createElement('div');
+            newIngredientDiv.classList.add('ingredient');
+            
+            // Create input fields for ingredient name and quantity
+            var nameInput = document.createElement('input');
+            nameInput.type = 'text';
+            nameInput.classList.add('ingredient-name');
+            nameInput.placeholder = 'Ingredient Name';
+            
+            var quantityInput = document.createElement('input');
+            quantityInput.type = 'text';
+            quantityInput.classList.add('ingredient-quantity');
+            quantityInput.placeholder = 'Quantity';
+            
+            // Append input fields to the new ingredient div
+            newIngredientDiv.appendChild(nameInput);
+            newIngredientDiv.appendChild(quantityInput);
+            
+            // Append the new ingredient div to the ingredients container
+            document.getElementById('ingredients').appendChild(newIngredientDiv);
+        });
+    </script>
+</body>
+</html>
