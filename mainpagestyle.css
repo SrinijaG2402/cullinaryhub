@@ -528,13 +528,17 @@ span {
     display: none;
     position: absolute;
     top: 100%;
-    left: 60%;
+    left: 90%;
     transform: translateX(-50%);
     background-color: var(--bg-color);
     padding: 1rem;
     border-radius: 1rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
     z-index: 10;
+}
+
+.user-options a {
+    margin-left: 0px;
 }
 
 .user-options a {
