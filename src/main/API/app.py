@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 import oracledb
@@ -8,7 +8,7 @@ import math
 
 # Credits: https://github.com/JustTheCoolest/StockAnalyser
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../../static/templates")
 CORS(app)
 api = Api(app)
 
@@ -199,6 +199,13 @@ api.add_resource(Edit, '/edit')
 api.add_resource(Pull, '/pull')
 api.add_resource(Get, '/get/<int:recipeid>')
 
+@app.route('/')
+def index():
+    return render_template('mainpageindex.html')
+
+@app.route('/')
+def viewpost():
+    return render_template(r'viewpost\view_post.html')
 
 if __name__ == "__main__":
     table_setup()
