@@ -10,7 +10,7 @@ The main goal is to create a recipe network that shows how recipes are connected
 • This website has the potential to provide world-wide cultural appreciation and unite everyone with the diverse delicacies around the world (fulfils SDG 11).
 • Local restaurants can add their own recipes to the platform.
 
-✨ Do collaborate with us for developing this into a successful open-source project!
+
 
 ## Images for UI sample
 
@@ -19,3 +19,5 @@ The main goal is to create a recipe network that shows how recipes are connected
 ![webpage3](https://github.com/SrinijaG2402/cullinaryhub/assets/120951357/b04e6388-fd67-4ad0-8a14-22e2e76d2f6d)
 ![webpage4](https://github.com/SrinijaG2402/cullinaryhub/assets/120951357/00c0b541-48d8-4fca-b697-0f3b47ad3b49)
 ![webpage5](https://github.com/SrinijaG2402/cullinaryhub/assets/120951357/9b3455bc-a0b1-44d6-8173-b9203caeccbc)
+
+## ✨ Let's collaborate for developing this into a successful open-source project!
