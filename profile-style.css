@@ -4,7 +4,7 @@
     --second-bg-color: #323946;
     --text-color: #fff;
     --main-color: #0ef;
-}
+}/* Global styles */
 body {
     background: var(--bg-color);
     color: var(--text-color);
@@ -19,15 +19,15 @@ body {
     padding: 2rem 2rem 6rem; /* Added more padding to the bottom */
     position: relative;
 }
-
+/* 
 .profile-icon {
     position: absolute;
     top: 2rem; /* Adjusted position */
     right: 2rem; /* Adjusted position */
-}
+} */
 
 .profile-icon img {
-    width: 20px; /* Adjusted size */
+    width: 40px; /* Adjusted size */
 }
 
 .profile-picture {
@@ -57,11 +57,29 @@ body {
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    position: relative; /* Added position */
 }
 
 .recipe h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: var(--main-color);
+}
+
+/* Action button styles */
+.recipe-actions {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.action-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--main-color);
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
     color: var(--main-color);
 }
 
