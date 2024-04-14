@@ -13,6 +13,7 @@
         <p>Type: Non-Veg</p>
         <p>Attribute: Spicy</p>
         <p>Instructions: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <button onclick="copyDishDetails('Dish 4')">Fork</button>
     </div>
     
     <div class="dish">
@@ -20,9 +21,21 @@
         <p>Type: Veg</p>
         <p>Attribute: Sour</p>
         <p>Instructions: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <button onclick="copyDishDetails('Dish 5')">Fork</button>
     </div>
     
     <!-- Add more dishes as needed -->
 
+    <script>
+        function copyDishDetails(details) {
+            var textField = document.createElement('textarea');
+            textField.innerText = details;
+            document.body.appendChild(textField);
+            textField.select();
+            document.execCommand('copy');
+            textField.remove();
+            alert('Dish details copied!');
+        }
+    </script>
 </body>
 </html>

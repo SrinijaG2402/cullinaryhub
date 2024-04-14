@@ -13,9 +13,21 @@
         <p>Type: Vegan</p>
         <p>Attribute: Sweet</p>
         <p>Instructions: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <button onclick="copyDishDetails('Dish 3')">Fork</button>
     </div>
     
     <!-- Add more dishes as needed -->
 
+    <script>
+        function copyDishDetails(details) {
+            var textField = document.createElement('textarea');
+            textField.innerText = details;
+            document.body.appendChild(textField);
+            textField.select();
+            document.execCommand('copy');
+            textField.remove();
+            alert('Dish details copied!');
+        }
+    </script>
 </body>
 </html>

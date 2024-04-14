@@ -13,6 +13,7 @@
         <p>Type: Veg</p>
         <p>Attribute: Spicy</p>
         <p>Instructions: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <button onclick="downloadDishDetails('Dish 1', 'Veg', 'Spicy', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.')">Fork</button>
     </div>
     
     <div class="dish">
@@ -20,9 +21,22 @@
         <p>Type: Non-Veg</p>
         <p>Attribute: Sour</p>
         <p>Instructions: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <button onclick="downloadDishDetails('Dish 2', 'Non-Veg', 'Sour', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.')">Fork</button>
     </div>
     
     <!-- Add more dishes as needed -->
 
+    <script>
+        function downloadDishDetails(name, type, attribute, instructions) {
+            var dishDetails = 'Dish Name: ' + name + '\nType: ' + type + '\nAttribute: ' + attribute + '\nInstructions: ' + instructions;
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dishDetails));
+            element.setAttribute('download', name.replace(' ', '_') + '.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+    </script>
 </body>
 </html>
