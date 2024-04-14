@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-connection = oracledb.connect(user='system', password=open('API/password.txt').read(), dsn='localhost:1521/xe')
+connection = oracledb.connect(user='system', password=open('password.txt').read(), dsn='localhost:1521/xe')
 cursor = connection.cursor()
 
 def table_setup():
@@ -64,9 +64,7 @@ class Unique(Resource):
     parser.add_argument('taste', required=True)
     parser.add_argument('description', required=True)
 
-
-    def get():
-        
+    def get(self):  # Add the self argument here
         # Query to retrieve details of recipes without a parent
         query = "SELECT * FROM recipe WHERE parent IS NULL"
         
@@ -77,22 +75,7 @@ class Unique(Resource):
         recipes = cursor.fetchall()
         
         return recipes
-    
-    def find_parents_and_siblings(recipe_id):
-        parent_and_siblings = []
 
-        def recursive_query(recipe_id):
-            cursor.execute(f"SELECT recipeid FROM recipe WHERE parent = {recipe_id}")
-            results = cursor.fetchall()
-            for row in results:
-                parent_and_siblings.append(row[0])
-                recursive_query(row[0])
-        
-        # Call the recursive function to find parents and siblings
-        recursive_query(recipe_id)
-        
-        
-        return parent_and_siblings
 
 class Parent(Resource):
     parser = reqparse.RequestParser()  
