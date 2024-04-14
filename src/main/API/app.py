@@ -8,7 +8,7 @@ import math
 
 # Credits: https://github.com/JustTheCoolest/StockAnalyser
 
-app = Flask(__name__, template_folder="../")
+app = Flask(__name__, template_folder="../../static/templates")
 CORS(app)
 api = Api(app)
 
