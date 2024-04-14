@@ -12,7 +12,7 @@
     </header>
 
     <main>
-        <div class="post-container">
+        <div class="post-container" id="post-container">
             <!-- First Post -->
             <div class="post">
                 <h2>Title of the First Post</h2>
@@ -34,9 +34,25 @@
             <!-- Add more posts as needed -->
         </div>
     </main>
+    <script>
+        fetch('http://localhost:3000/posts')
+        .then(response => response.json())
+        .then(data => {
+            container = document.getElementById('post-container')
+            data.forEach(post => {
+                postDiv = document.createElement('div')
+                postDiv.className = 'post'
+                postDiv.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <p>Author: ${post.author}</p>
+                    <p>Date: ${post.date}</p>
+                    <img src="${post.image}" alt="Post Image">
+                    <p>${post.content}</p>
+                `
+                container.appendChild(postDiv)
+            })
+        })
+    </script>
 
-    <footer>
-        <!-- Footer content, such as links to other pages or social media -->
-    </footer>
 </body>
 </html>
