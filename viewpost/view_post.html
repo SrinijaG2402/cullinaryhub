@@ -98,10 +98,16 @@
                 postDiv.className = 'post'
                 postDiv.innerHTML = `
                     <h2>${post.title}</h2>
-                    <p>Author: ${post.author}</p>
-                    <p>Date: ${post.date}</p>
-                    <img src="${post.image}" alt="Post Image">
-                    <p>${post.content}</p>
+                    <p> Type: ${post.type}</p>
+                    <p> Taste: ${post.taste}</p>
+                    <p> Ingredients:</p>
+                    <ul>
+                        ${post.ingredients.map(ingredient => `<li>${ingredient.name} - ${ingredient.quantity}</li>`).join('')}
+                    </ul>
+                    <p> Instructions:</p>
+                    <ul>
+                        ${post.instructions.map(instruction => `<li>${instruction}</li>`).join('')}
+                    </ul>
                 `
                 container.appendChild(postDiv)
             })
