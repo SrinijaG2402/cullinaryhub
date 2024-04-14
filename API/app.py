@@ -9,8 +9,8 @@ import math
 
 app = Flask(__name__)
 api = Api(app)
-
-connection = oracledb.connect(user='system', password=open('API/password.txt').read(), dsn='localhost:1521/xe')
+parent_and_siblings = []
+connection = oracledb.connect(user='system', password=open('password.txt').read(), dsn='localhost:1521/xe')
 cursor = connection.cursor()
 
 def table_setup():
@@ -67,8 +67,60 @@ class Analyser(Resource):
         connection.commit()
         return {'message': 'Stock added'}, 201
 
+class Recipe(Resource):
+
+
+    def unique():
+        
+        # Query to retrieve details of recipes without a parent
+        query = "SELECT * FROM recipe WHERE parent IS NULL"
+        
+        # Execute the query
+        cursor.execute(query)
+        
+        # Fetch all the results
+        recipes = cursor.fetchall()
+        
+        return recipes
+    
+    def find_parents_and_siblings(recipe_id):
+
+
+        def recursive_query(recipe_id):
+            cursor.execute(f"SELECT recipeid FROM recipe WHERE parent = {recipe_id}")
+            results = cursor.fetchall()
+            for row in results:
+                parent_and_siblings.append(row[0])
+                recursive_query(row[0])
+        
+        # Call the recursive function to find parents and siblings
+        recursive_query(recipe_id)
+        
+        
+        return parent_and_siblings
+
+
+
+    def post(self, stock_name):
+        arguments = Analyser.parser.parse_args()
+        cursor.execute(f"""
+            INSERT INTO Stocks VALUES (
+                '{stock_name}', 
+                {arguments['price_at_buy']}, 
+                TO_DATE('{arguments['purchase_date']}', 'yyyy-mm-dd'), 
+                {arguments['fee_ratio_at_buy']}, 
+                {arguments['fee_ratio_at_sell']}, 
+                {arguments['capital_gains_tax_ratio']}, 
+                {arguments['target_profit_ratio']}
+            )
+        """)
+        connection.commit()
+        return {'message': 'Stock added'}, 201
+
+
 
 api.add_resource(Analyser, '/', '/<string:stock_name>')
+
 
 if __name__ == "__main__":
     table_setup()
