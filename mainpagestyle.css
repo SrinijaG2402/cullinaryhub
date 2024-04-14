@@ -519,3 +519,6 @@ span {
 
     }
 }
+.logo:hover {
+    color: var(--main-color); 
+}
