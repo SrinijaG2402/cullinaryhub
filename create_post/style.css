@@ -1,0 +1,80 @@
+/* Define custom color variables */
+:root {
+    --bg-color: #1f242d;
+    --second-bg-color: #323946;
+    --text-color: #fff;
+    --main-color: #0ef;
+}
+
+/* Apply styles using custom color variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+header {
+    background-color: var(--second-bg-color);
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    color: var(--main-color);
+}
+
+main {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Add spacing between form groups */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+textarea {
+    height: 100px; /* Adjust height as needed */
+}
+
+.sub-box {
+    background-color: var(--second-bg-color);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.sub-box-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--main-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0cf;
+}

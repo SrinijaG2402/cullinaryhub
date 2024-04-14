@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
-            background-image: url('https://images.unsplash.com/photo-1543340904-1ccec6549722'); /* Background image */
+            background-image: url('https://images.unsplash.com/photo-1543340904-1ccec6549722?auto=format&fit=crop&w=1350&q=80'); /* Background image */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -22,6 +22,8 @@
             background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Add scrollbar when content exceeds container height */
+            max-height: 70vh; /* Limit container height to 70% of viewport height */
         }
         h1 {
             text-align: center;
@@ -71,7 +73,18 @@
             <li><strong>Community Interaction:</strong> Engage with other users by liking, commenting, and sharing their recipes. Connect with like-minded individuals who share your passion for cooking.</li>
         </ul>
         <p>Join Recipe Repository today and become part of a vibrant community of home cooks, professional chefs, and foodies!</p>
+
+        <!-- Additional content to make the container scrollable -->
+        <h2>Why Choose Recipe Repository?</h2>
+        <p>Recipe Repository is not just another recipe-sharing platform. Here's why you should choose us:</p>
+        <ul>
+            <li><strong>Quality Content:</strong> We curate and verify recipes to ensure high-quality content for our users.</li>
+            <li><strong>Easy to Use:</strong> Our intuitive interface makes it easy to browse, search, and contribute recipes.</li>
+            <li><strong>Community Engagement:</strong> Connect with other food enthusiasts, share cooking tips, and participate in recipe challenges.</li>
+            <li><strong>Personalization:</strong> Customize your feed based on your preferences and dietary restrictions.</li>
+            <li><strong>Constant Updates:</strong> We're always adding new features and improvements to enhance your experience.</li>
+        </ul>
+        <p>Whether you're a seasoned chef or a beginner in the kitchen, Recipe Repository has something for everyone. Join our community today and unleash your culinary creativity!</p>
     </div>
 </body>
 </html>
-
