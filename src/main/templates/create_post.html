@@ -51,7 +51,7 @@
         <h1><i class="fas fa-utensils"></i> Create a New Recipe</h1>
     </header>
     <main>
-        <form id="recipeForm" >
+        <form id="recipeForm" onsubmit="return false;">
             <!-- Heading: Create a New Recipe -->
             <div class="form-group">
                 <h2>Create a New Recipe</h2>
@@ -60,17 +60,17 @@
             <!-- User name input -->
             <div class="form-group">
                 <label for="userName">Username:</label>
-                <input type="text" id="userName" name="userName" placeholder="Enter your name" required>
+                <input type="text" id="username" name="username" placeholder="Enter your name" required>
             </div>
 
             <!-- Radio buttons for attributes -->
             <div class="form-group">
                 <label for="attributes">Attributes:</label><br>
-                <input type="radio" id="vegan" name="attributes" value="vegan">
+                <input type="radio" id="vegan" name="vegetarianism" value="vegan">
                 <label for="vegan">Vegan</label>
-                <input type="radio" id="vegetarian" name="attributes" value="vegetarian">
+                <input type="radio" id="vegetarian" name="vegetarianism" value="vegetarian">
                 <label for="vegetarian">Vegetarian</label>
-                <input type="radio" id="nonVeg" name="attributes" value="nonVeg">
+                <input type="radio" id="nonVeg" name="vegetarianism" value="nonVeg">
                 <label for="nonVeg">Non-veg</label>
             </div>
 
@@ -128,6 +128,14 @@
                 <textarea id="recipeInstructions" name="recipeInstructions" placeholder="Enter the recipe instructions here" rows="4" required></textarea>
             </div>
 
+            <!-- Location input field -->
+            <div class="form-group">
+                <label for="location">
+                    <i class="fas fa-map-marker-alt"></i> Location:
+                </label>
+                <input type="text" id="location" name="location" placeholder="Enter the location here" required>
+            </div>
+
             <!-- Submit button -->
             <button type="submit" onclick="post_data()"><i class="fas fa-check"></i> Submit Recipe</button>
         </form>
@@ -173,6 +181,10 @@
             // Create a new FormData object
             var formData = new FormData(form);
 
+            // Convert formData to a plain object
+            var formObject = {};
+            formData.forEach((value, key) => formObject[key] = value);
+
             // Get the ingredients
             var ingredients = document.querySelectorAll('.ingredient');
             var ingredientsArray = [];
@@ -183,12 +195,14 @@
             });
 
             // Add the ingredients to the form data
-            formData.append('ingredients', JSON.stringify(ingredientsArray));
+            formObject['ingredients'] = ingredientsArray;
+
+            console.log(formObject)
 
             // Send the data to the server
             fetch("/insert", {
                 method: "POST",
-                body: JSON.stringify(formData),
+                body: JSON.stringify(formObject),
                 headers: {
                     "Content-Type": "application/json"
                 }
