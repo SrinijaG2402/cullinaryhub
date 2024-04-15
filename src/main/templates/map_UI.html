@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pin on Static Map</title>
+<style>
+  #map {
+    position: relative;
+    width: 800px; /* Adjust map width */
+    height: 600px; /* Adjust map height */
+    background-image: url('map_001.jpg'); /* Replace with your map image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+  }
+  .pin {
+    position: absolute;
+    width: 20px; /* Pin width */
+    height: 20px; /* Pin height */
+    border-radius: 50%; /* Make it round */
+  }
+  #user-pin {
+    background-color: red; /* User pin color */
+  }
+  .random-pin {
+    background-color: blue; /* Random pin color */
+    display: none; /* Initially hidden */
+  }
+  #pin-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>Pin on Static Map</h1>
+<div id="map"></div>
+<div id="pin-info"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var map = document.getElementById('map');
+    var userPin = document.createElement('div');
+    var randomPins = []; // Array to hold random pins
+    var pinDistanceThreshold = 100; // Distance threshold for showing random pins
+    var pinInfo = document.getElementById('pin-info');
+
+    // Pin data
+    var pinData = [
+      { x: 200, y: 100, text: "Dish 1 details" },
+      { x: 400, y: 300, text: "Dish 2 details" },
+      { x: 600, y: 500, text: "Dish 3 details" }
+      // Add more pins with text here
+    ];
+
+    // Function to calculate distance between two points
+    function calculateDistance(x1, y1, x2, y2) {
+      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    // Function to generate random pin positions
+    function generateRandomPins() {
+      pinData.forEach(function(data) {
+        var pin = document.createElement('div');
+        pin.className = 'pin random-pin';
+        pin.style.left = data.x + 'px';
+        pin.style.top = data.y + 'px';
+        randomPins.push({ element: pin, x: data.x, y: data.y, text: data.text });
+        map.appendChild(pin);
+      });
+    }
+
+    // Function to check distance between user pin and random pins
+    function checkDistance() {
+      var userPinPosition = userPin.getBoundingClientRect();
+      randomPins.forEach(function(pinData) {
+        var distance = calculateDistance(userPinPosition.left + userPin.offsetWidth / 2, userPinPosition.top + userPin.offsetHeight / 2, pinData.x, pinData.y);
+        if (distance <= pinDistanceThreshold) {
+          pinData.element.style.display = 'block'; // Show pin
+          pinInfo.innerHTML = pinData.text;
+          pinInfo.style.display = 'block'; // Show pin info
+          pinInfo.style.top = (userPinPosition.top + userPin.offsetHeight + 10) + 'px'; // Position pin info below user pin
+          pinInfo.style.left = (userPinPosition.left + userPin.offsetWidth + 10) + 'px'; // Position pin info to the right of user pin
+        } else {
+          pinData.element.style.display = 'none'; // Hide pin
+        }
+      });
+    }
+
+    // Function to update user pin position
+    function updateUserPin(x, y) {
+      userPin.style.left = x + 'px';
+      userPin.style.top = y + 'px';
+    }
+
+    // Initialize user pin
+    userPin.id = 'user-pin';
+    userPin.className = 'pin';
+    map.appendChild(userPin);
+
+    // Generate random pins
+    generateRandomPins();
+
+    // Listen for keydown events to move user pin
+    document.addEventListener('keydown', function(event) {
+      var step = 10; // Adjust step size as needed
+      switch (event.key) {
+        case 'ArrowUp':
+          userPin.style.top = Math.max(0, userPin.offsetTop - step) + 'px';
+          break;
+        case 'ArrowDown':
+          userPin.style.top = Math.min(map.offsetHeight - userPin.offsetHeight, userPin.offsetTop + step) + 'px';
+          break;
+        case 'ArrowLeft':
+          userPin.style.left = Math.max(0, userPin.offsetLeft - step) + 'px';
+          break;
+        case 'ArrowRight':
+          userPin.style.left = Math.min(map.offsetWidth - userPin.offsetWidth, userPin.offsetLeft + step) + 'px';
+          break;
+      }
+      checkDistance();
+    });
+  });
+</script>
+
+</body>
+</html>
