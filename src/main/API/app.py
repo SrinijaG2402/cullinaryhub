@@ -110,7 +110,7 @@ class Insert(Resource):
     parser.add_argument('vegetarianism', type=str, required=True, help="Vegetarianism status is required")
     parser.add_argument('taste', type=str, required=True, help="Taste preference is required")
     parser.add_argument('description', type=str, required=True, help="Description is required")
-    parser.add_argument('ingredients', str, help = "req")
+    parser.add_argument('ingredients', type=str, help = "req")
     
     def post(self):
         print("\n\nHI")
