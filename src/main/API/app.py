@@ -4,15 +4,16 @@ from flask_cors import CORS
 import oracledb
 import datetime
 import dateutil.relativedelta
-import math
+import math    
+import random
 
 # Credits: https://github.com/JustTheCoolest/StockAnalyser
 
-app = Flask(__name__, template_folder="../../static/templates")
+app = Flask(__name__, template_folder="../templates",static_folder='../../static')
 CORS(app)
 api = Api(app)
 
-connection = oracledb.connect(user='system', password=open('password.txt').read(), dsn='localhost:1521/xe')
+connection = oracledb.connect(user='system', password=open('API/password.txt').read(), dsn='localhost:1521/xe')
 cursor = connection.cursor()
 
 def table_setup():
@@ -57,12 +58,12 @@ def table_setup():
 
 class Unique(Resource):
     parser = reqparse.RequestParser()  
-    parser.add_argument('username', required=True) 
-    parser.add_argument('parent', required=True)
-    parser.add_argument('location', required=True)
-    parser.add_argument('vegetarianism', required=True)
-    parser.add_argument('taste', required=True)
-    parser.add_argument('description', required=True)
+    parser.add_argument('username', required=True, help="Username is required") 
+    parser.add_argument('parent', required=True, help="Parent is required")
+    parser.add_argument('location', required=True, help="Location is required")
+    parser.add_argument('vegetarianism', required=True, help="Vegetarianism status is required")
+    parser.add_argument('taste', required=True, help="Taste preference is required")
+    parser.add_argument('description', required=True, help="Description is required")
 
     def get(self):  # Add the self argument here
         # Query to retrieve details of recipes without a parent
@@ -77,14 +78,13 @@ class Unique(Resource):
         return recipes
 
 
+def generate_recipe_id():
+    # Generate a random integer between 1 and 1000000 (you can adjust these numbers as needed)
+    recipe_id = random.randint(1, 1000000)
+    return recipe_id
+
+
 class Parent(Resource):
-    parser = reqparse.RequestParser()  
-    parser.add_argument('username', required=True) 
-    parser.add_argument('parent', required=True)
-    parser.add_argument('location', required=True)
-    parser.add_argument('vegetarianism', required=True)
-    parser.add_argument('taste', required=True)
-    parser.add_argument('description', required=True)
 
     
     def get(recipe_id):
@@ -103,14 +103,38 @@ class Parent(Resource):
         
         return parent_and_siblings
 
+class Insert(Resource):
+    parser = reqparse.RequestParser()  
+    parser.add_argument('username', type=str, required=True, help="Username is required")
+    parser.add_argument('location', type=str, required=True, help="Location is required")
+    parser.add_argument('vegetarianism', type=str, required=True, help="Vegetarianism status is required")
+    parser.add_argument('taste', type=str, required=True, help="Taste preference is required")
+    parser.add_argument('description', type=str, required=True, help="Description is required")
+    parser.add_argument('ingredients', type=str, help = "req")
+    
     def post(self):
-
-        args = parser.parse_args()  # parse arguments to dictionary
-
-        # use args['recipe_name'] and args['ingredients'] to process the posted data
-        # for example, you might store it in a database or use it to update the state of your application
-
+        print("\n\nHI")
+        args = Insert.parser.parse_args()  # parse arguments to dictionary
+        # print(args)
+        recipe_id = generate_recipe_id()
+        # Insert the recipe into the database
+        # try:
+        #     cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, :username, NULL, :location, :vegetarianism, :taste, :description)", args)
+        #     print(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
+        #     cursor.commit()
+        #     return {'message': 'Recipe received', 'data': args}, 200
+        # except:
+        #     return {'error': 'An error occurred'}, 500
+        cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, '{args['username']}', NULL, '{args['location']}', '{args['vegetarianism']}', '{args['taste']}', '{args['description']}')")
+        print(args['ingredients'])
+        ingredients = eval(args['ingredients'])
+        for ingredient in ingredients:
+            print(ingredient)
+            cursor.execute(f"INSERT INTO ingredients_lists VALUES ({ingredient[0]}, {int(ingredient[1])}, {recipe_id})")
+        connection.commit()
         return {'message': 'Recipe received', 'data': args}, 200
+        
+        
 
 class Fork(Resource):
     parser = reqparse.RequestParser()
@@ -119,7 +143,7 @@ class Fork(Resource):
     
     def post(self):
         args = self.parser.parse_args()
-        
+        print(args)
         # Check if the provided recipe ID exists
         cursor.execute("SELECT * FROM recipe WHERE recipeid = ?", (args['recipeid'],))
         existing_recipe = cursor.fetchone()
@@ -194,6 +218,7 @@ class Get(Resource):
 
 api.add_resource(Unique, '/posts')
 api.add_resource(Parent, '/view_variation/<recipeid>')
+api.add_resource(Insert, '/insert')
 api.add_resource(Fork, '/fork')
 api.add_resource(Edit, '/edit')
 api.add_resource(Pull, '/pull')
@@ -203,9 +228,23 @@ api.add_resource(Get, '/get/<int:recipeid>')
 def index():
     return render_template('mainpageindex.html')
 
-@app.route('/')
+@app.route('/user-page-body.html')
+def user():
+    return render_template('user-page-body.html')
+
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
+
+@app.route('/view_post.html')
 def viewpost():
-    return render_template(r'viewpost\view_post.html')
+    return render_template('view_post.html')
+
+
+@app.route('/create_post.html')  
+def create_post():
+    return render_template('create_post.html')
+
 
 if __name__ == "__main__":
     table_setup()

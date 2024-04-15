@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Recipe</title>
+    <!-- Link to Font Awesome stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- <link rel="stylesheet" href=""> -->
+    <style>
+        /* Add any additional CSS styles here */
+        body {
+            background-color: rgb(31, 36, 45);
+            color: white;
+            font-size: 28px;
+            line-height: 1.6; /* Increase line spacing */
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form {
+            width: 50%;
+        }
+        .form-section {
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid white; /* Add box border */
+            padding: 20px; /* Add padding */
+            border-radius: 10px; /* Add border radius */
+        }
+        .form-section h2 {
+            margin-top: 0;
+            margin-bottom: 20px; /* Add margin bottom */
+        }
+        .ingredient {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .ingredient input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Icon for header -->
+        <h1><i class="fas fa-utensils"></i> Create a New Recipe</h1>
+    </header>
+    <main>
+        <form id="recipeForm" onsubmit="return false;">
+            <!-- Heading: Create a New Recipe -->
+            <div class="form-group">
+                <h2>Create a New Recipe</h2>
+            </div>
+
+            <!-- User name input -->
+            <div class="form-group">
+                <label for="userName">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your name" required>
+            </div>
+
+            <!-- Radio buttons for attributes -->
+            <div class="form-group">
+                <label for="attributes">Attributes:</label><br>
+                <input type="radio" id="vegan" name="vegetarianism" value="vegan">
+                <label for="vegan">Vegan</label>
+                <input type="radio" id="vegetarian" name="vegetarianism" value="vegetarian">
+                <label for="vegetarian">Vegetarian</label>
+                <input type="radio" id="nonVeg" name="vegetarianism" value="nonVeg">
+                <label for="nonVeg">Non-veg</label>
+            </div>
+
+            <!-- Radio buttons for taste -->
+            <div class="form-group">
+                <label for="taste">Taste:</label><br>
+                <input type="radio" id="spicy" name="taste" value="spicy">
+                <label for="spicy">Spicy</label>
+                <input type="radio" id="sweet" name="taste" value="sweet">
+                <label for="sweet">Sweet</label>
+                <input type="radio" id="sour" name="taste" value="sour">
+                <label for="sour">Sour</label>
+            </div>
+
+            <!-- Heading: New Recipe -->
+            <div class="form-group">
+                <h2>New Recipe</h2>
+            </div>
+
+            <!-- Recipe Name input -->
+            <div class="form-group">
+                <label for="newRecipe1">
+                    <!-- Icon for new recipe -->
+                    <i class="fas fa-plus-circle"></i> Recipe Name:
+                </label>
+                <input type="text" id="newRecipe1" name="newRecipe1" placeholder="Enter the name of your recipe" required>
+            </div>
+
+            <!-- Ingredients section -->
+            <div class="form-group">
+                <label for="ingredients1">
+                    <!-- Icon for ingredients -->
+                    <i class="fas fa-shopping-basket"></i> Ingredients:
+                </label>
+                <div id="ingredients1">
+                    <!-- Existing ingredient input fields -->
+                    <div class="ingredient">
+                        <input type="text" class="ingredient-name" placeholder="Ingredient Name">
+                        <input type="text" class="ingredient-quantity" placeholder="Quantity">
+                    </div>
+                </div>
+                <button type="button" class="addIngredientBtn"><i class="fas fa-plus"></i> Add Ingredient</button>
+            </div>
+
+            <!-- Heading: Recipe Instructions -->
+            <div class="form-group">
+                <h2>Recipe Instructions</h2>
+            </div>
+
+            <!-- Recipe Instructions text area -->
+            <div class="form-group">
+                <label for="recipeInstructions">
+                    <i class="fas fa-book"></i> Recipe Instructions:
+                </label>
+                <textarea id="recipeInstructions" name="description" placeholder="Enter the recipe instructions here" rows="4" required></textarea>
+            </div>
+
+            <!-- Location input field -->
+            <div class="form-group">
+                <label for="location">
+                    <i class="fas fa-map-marker-alt"></i> Location:
+                </label>
+                <input type="text" id="location" name="location" placeholder="Enter the location here" required>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" onclick="post_data()"><i class="fas fa-check"></i> Submit Recipe</button>
+        </form>
+    </main>
+    <script>
+        // Add ingredient input fields dynamically
+        var addIngredientBtns = document.querySelectorAll('.addIngredientBtn');
+        addIngredientBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Get the container for ingredients
+                var ingredientsContainer = btn.previousElementSibling;
+
+                // Create a new ingredient div
+                var newIngredientDiv = document.createElement('div');
+                newIngredientDiv.classList.add('ingredient');
+                
+                // Create input fields for ingredient name and quantity
+                var nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.classList.add('ingredient-name');
+                nameInput.placeholder = 'Ingredient Name';
+                
+                var quantityInput = document.createElement('input');
+                quantityInput.type = 'text';
+                quantityInput.classList.add('ingredient-quantity');
+                quantityInput.placeholder = 'Quantity';
+                
+                // Append input fields to the new ingredient div
+                newIngredientDiv.appendChild(nameInput);
+                newIngredientDiv.appendChild(quantityInput);
+                
+                // Append the new ingredient div to the ingredients container
+                ingredientsContainer.appendChild(newIngredientDiv);
+            });
+        });
+    </script>
+    <script>
+        // Function to post data to the server
+        function post_data() {
+            // Get the form element
+            var form = document.getElementById('recipeForm');
+
+            // Create a new FormData object
+            var formData = new FormData(form);
+
+            // Convert formData to a plain object
+            var formObject = {};
+            formData.forEach((value, key) => formObject[key] = value);
+
+            // Get the ingredients
+            var ingredients = document.querySelectorAll('.ingredient');
+            var ingredientsArray = [];
+            ingredients.forEach(function(ingredient) {
+                var name = ingredient.querySelectorAll('.ingredient-name')[0].value;
+                var quantity = ingredient.querySelectorAll('.ingredient-quantity')[0].value;
+                ingredientsArray.push([name, quantity]);
+            });
+
+            // Add the ingredients to the form data
+            formObject['ingredients'] = ingredientsArray;
+
+            console.log(formObject['ingredients']);
+            console.log(formObject['ingredients'][0]);
+            console.log(JSON.stringify(formObject))
+
+            // Send the data to the server
+            fetch("/insert", {
+                method: "POST",
+                body: JSON.stringify(formObject),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+        }
+    </script>
+</body>
+</html>
