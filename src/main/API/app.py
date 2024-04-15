@@ -9,7 +9,7 @@ import random
 
 # Credits: https://github.com/JustTheCoolest/StockAnalyser
 
-app = Flask(__name__, template_folder="../../static/templates")
+app = Flask(__name__, template_folder="../templates",static_folder='../../static')
 CORS(app)
 api = Api(app)
 
@@ -85,13 +85,6 @@ def generate_recipe_id():
 
 
 class Parent(Resource):
-    parser = reqparse.RequestParser()  
-    parser.add_argument('username', required=True) 
-    parser.add_argument('parent', required=True)
-    parser.add_argument('location', required=True)
-    parser.add_argument('vegetarianism', required=True)
-    parser.add_argument('taste', required=True)
-    parser.add_argument('description', required=True)
 
     
     def get(recipe_id):
@@ -110,17 +103,30 @@ class Parent(Resource):
         
         return parent_and_siblings
 
+class Insert(Resource):
+    parser = reqparse.RequestParser()  
+    parser.add_argument('username', required=True) 
+    parser.add_argument('parent', required=True)
+    parser.add_argument('location', required=True)
+    parser.add_argument('vegetarianism', required=True)
+    parser.add_argument('taste', required=True)
+    parser.add_argument('description', required=True)
+    
     def post(self):
-
-        args = Parent.parser.parse_args()  # parse arguments to dictionary
-
+        print("\n\nHI")
+        args = Insert.parser.parse_args()  # parse arguments to dictionary
+        print(args)
         recipe_id = generate_recipe_id()
         # Insert the recipe into the database
         try:
             cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
+            print(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
+            cursor.commit()
             return {'message': 'Recipe received', 'data': args}, 200
         except:
             return {'error': 'An error occurred'}, 500
+        
+        
 
 class Fork(Resource):
     parser = reqparse.RequestParser()
@@ -129,7 +135,7 @@ class Fork(Resource):
     
     def post(self):
         args = self.parser.parse_args()
-        
+        print(args)
         # Check if the provided recipe ID exists
         cursor.execute("SELECT * FROM recipe WHERE recipeid = ?", (args['recipeid'],))
         existing_recipe = cursor.fetchone()
@@ -204,6 +210,7 @@ class Get(Resource):
 
 api.add_resource(Unique, '/posts')
 api.add_resource(Parent, '/view_variation/<recipeid>')
+api.add_resource(Insert, '/insert')
 api.add_resource(Fork, '/fork')
 api.add_resource(Edit, '/edit')
 api.add_resource(Pull, '/pull')
