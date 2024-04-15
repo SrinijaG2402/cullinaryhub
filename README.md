@@ -10,6 +10,11 @@ The main goal is to create a recipe network that shows how recipes are connected
 • This website has the potential to provide world-wide cultural appreciation and unite everyone with the diverse delicacies around the world (fulfils SDG 11).
 restrauntview.html-It's listing the restraunts 
 
+```bash
+pip install https://github.com/SrinijaG2402/cullinaryhub/
+cd src\main\API
+python app.py
+```
 h1.html-list of dishes in restraunt 1 
 
 h2.html-list of dishes in restraunt 2
