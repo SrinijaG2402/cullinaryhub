@@ -4,11 +4,29 @@
 The main goal is to create a recipe network that shows how recipes are connected through changes and updates. It's also a place where people can share their ideas and make existing recipes better. 
 
 • An open-source platform for finding recipes based on cuisines and location.
-• Users can refine searches based on allergies, food types and location.
+• Users can refine searches based on food types and location.
 • Share and discover recipes with other food enthusiasts, add comments and provide reviews.
-• Uploaded recipes from users can be rated and reviews can be given by commenting under the recipe, just like stack-overflow.
+• Uploaded recipes from users can be forked just like github.
 • This website has the potential to provide world-wide cultural appreciation and unite everyone with the diverse delicacies around the world (fulfils SDG 11).
-• Local restaurants can add their own recipes to the platform.
+restrauntview.html-It's listing the restraunts 
+
+h1.html-list of dishes in restraunt 1 
+
+h2.html-list of dishes in restraunt 2
+
+h3.html-list of dishes in restraunt 3
+
+createpost.html-posts the recipies and usernames
+
+about.html- shows the features of the website
+
+view_post.html-views the posts already made 
+
+mainpageindex.html-homepage of the websites,links all the webpages
+
+profile-page.html-shows profile of the user 
+
+
 
 
 
