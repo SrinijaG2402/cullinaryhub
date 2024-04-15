@@ -13,7 +13,7 @@ app = Flask(__name__, template_folder="../templates",static_folder='../../static
 CORS(app)
 api = Api(app)
 
-connection = oracledb.connect(user='system', password=open('password.txt').read(), dsn='localhost:1521/xe')
+connection = oracledb.connect(user='system', password=open('API/password.txt').read(), dsn='localhost:1521/xe')
 cursor = connection.cursor()
 
 def table_setup():
@@ -58,12 +58,12 @@ def table_setup():
 
 class Unique(Resource):
     parser = reqparse.RequestParser()  
-    parser.add_argument('username', required=True) 
-    parser.add_argument('parent', required=True)
-    parser.add_argument('location', required=True)
-    parser.add_argument('vegetarianism', required=True)
-    parser.add_argument('taste', required=True)
-    parser.add_argument('description', required=True)
+    parser.add_argument('username', required=True, help="Username is required") 
+    parser.add_argument('parent', required=True, help="Parent is required")
+    parser.add_argument('location', required=True, help="Location is required")
+    parser.add_argument('vegetarianism', required=True, help="Vegetarianism status is required")
+    parser.add_argument('taste', required=True, help="Taste preference is required")
+    parser.add_argument('description', required=True, help="Description is required")
 
     def get(self):  # Add the self argument here
         # Query to retrieve details of recipes without a parent
@@ -105,26 +105,30 @@ class Parent(Resource):
 
 class Insert(Resource):
     parser = reqparse.RequestParser()  
-    parser.add_argument('username', required=True) 
-    parser.add_argument('parent', required=True)
-    parser.add_argument('location', required=True)
-    parser.add_argument('vegetarianism', required=True)
-    parser.add_argument('taste', required=True)
-    parser.add_argument('description', required=True)
+    parser.add_argument('username', type=str, required=True, help="Username is required")
+    parser.add_argument('location', type=str, required=True, help="Location is required")
+    parser.add_argument('vegetarianism', type=str, required=True, help="Vegetarianism status is required")
+    parser.add_argument('taste', type=str, required=True, help="Taste preference is required")
+    parser.add_argument('description', type=str, required=True, help="Description is required")
+    parser.add_argument('ingredients', type=list, help = "req")
     
     def post(self):
         print("\n\nHI")
         args = Insert.parser.parse_args()  # parse arguments to dictionary
-        print(args)
+        # print(args)
         recipe_id = generate_recipe_id()
         # Insert the recipe into the database
-        try:
-            cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
-            print(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
-            cursor.commit()
-            return {'message': 'Recipe received', 'data': args}, 200
-        except:
-            return {'error': 'An error occurred'}, 500
+        # try:
+        #     cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, :username, NULL, :location, :vegetarianism, :taste, :description)", args)
+        #     print(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
+        #     cursor.commit()
+        #     return {'message': 'Recipe received', 'data': args}, 200
+        # except:
+        #     return {'error': 'An error occurred'}, 500
+        cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
+        print(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
+        cursor.commit()
+        return {'message': 'Recipe received', 'data': args}, 200
         
         
 
