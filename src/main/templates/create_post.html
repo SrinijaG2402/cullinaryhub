@@ -189,15 +189,17 @@
             var ingredients = document.querySelectorAll('.ingredient');
             var ingredientsArray = [];
             ingredients.forEach(function(ingredient) {
-                var name = ingredient.querySelector('.ingredient-name').value;
-                var quantity = ingredient.querySelector('.ingredient-quantity').value;
-                ingredientsArray.push({name: name, quantity: quantity});
+                var name = ingredient.querySelectorAll('.ingredient-name')[0].value;
+                var quantity = ingredient.querySelectorAll('.ingredient-quantity')[0].value;
+                ingredientsArray.push([name, quantity]);
             });
 
             // Add the ingredients to the form data
             formObject['ingredients'] = ingredientsArray;
 
-            console.log(formObject)
+            console.log(formObject['ingredients']);
+            console.log(formObject['ingredients'][0]);
+            console.log(JSON.stringify(formObject))
 
             // Send the data to the server
             fetch("/insert", {

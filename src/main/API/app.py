@@ -110,7 +110,7 @@ class Insert(Resource):
     parser.add_argument('vegetarianism', type=str, required=True, help="Vegetarianism status is required")
     parser.add_argument('taste', type=str, required=True, help="Taste preference is required")
     parser.add_argument('description', type=str, required=True, help="Description is required")
-    parser.add_argument('ingredients', type=list, help = "req")
+    parser.add_argument('ingredients', str, help = "req")
     
     def post(self):
         print("\n\nHI")
@@ -125,9 +125,13 @@ class Insert(Resource):
         #     return {'message': 'Recipe received', 'data': args}, 200
         # except:
         #     return {'error': 'An error occurred'}, 500
-        cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
-        print(f"INSERT INTO recipe VALUES ({recipe_id}, :username, :parent, :location, :vegetarianism, :taste, :description)", args)
-        cursor.commit()
+        cursor.execute(f"INSERT INTO recipe VALUES ({recipe_id}, '{args['username']}', NULL, '{args['location']}', '{args['vegetarianism']}', '{args['taste']}', '{args['description']}')")
+        print(args['ingredients'])
+        ingredients = eval(args['ingredients'])
+        for ingredient in ingredients:
+            print(ingredient)
+            cursor.execute(f"INSERT INTO ingredients_lists VALUES ({ingredient[0]}, {int(ingredient[1])}, {recipe_id})")
+        connection.commit()
         return {'message': 'Recipe received', 'data': args}, 200
         
         
